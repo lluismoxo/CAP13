@@ -2,61 +2,55 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://capconsultor.eu/</loc>
-    <lastmod>2026-07-03</lastmod>
+    <lastmod>2026-08-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://capconsultor.eu/blog.html</loc>
-    <lastmod>2026-07-03</lastmod>
+    <loc>https://capconsultor.eu/about.html</loc>
+    <lastmod>2026-08-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://capconsultor.eu/blog/chatbots-ia-para-pymes.html</loc>
-    <lastmod>2026-07-03</lastmod>
+    <loc>https://capconsultor.eu/services.html</loc>
+    <lastmod>2026-08-02</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://capconsultor.eu/blog/automatizar-reservas-clinicas.html</loc>
-    <lastmod>2026-07-03</lastmod>
+    <loc>https://capconsultor.eu/method.html</loc>
+    <lastmod>2026-08-02</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://capconsultor.eu/blog/lead-generation-pymes.html</loc>
-    <lastmod>2026-07-03</lastmod>
+    <loc>https://capconsultor.eu/industries.html</loc>
+    <lastmod>2026-08-02</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://capconsultor.eu/blog/automatizacion-restauracion-hosteleria.html</loc>
-    <lastmod>2026-07-03</lastmod>
+    <loc>https://capconsultor.eu/cases.html</loc>
+    <lastmod>2026-08-02</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://capconsultor.eu/blog/procesamiento-documentos-ia.html</loc>
-    <lastmod>2026-07-03</lastmod>
+    <loc>https://capconsultor.eu/contact.html</loc>
+    <lastmod>2026-08-02</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://capconsultor.eu/blog/errores-automatizar-pyme.html</loc>
-    <lastmod>2026-07-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://capconsultor.eu/privacy.html</loc>
-    <lastmod>2026-07-02</lastmod>
+    <lastmod>2026-08-02</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://capconsultor.eu/legal.html</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://capconsultor.eu/legal-notice.html</loc>
+    <lastmod>2026-08-02</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
