@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="CAP">
+  <!-- Green background -->
+  <rect width="512" height="512" fill="#25c2a0"/>
+  <!-- Black square inset -->
+  <rect x="48" y="48" width="416" height="416" fill="#000"/>
+  <!--
+    Four petals (vesica shapes). Each petal is the intersection of two circles
+    of radius 208 centred on adjacent midpoints of the black square's edges,
+    so every petal runs from a corner to the exact centre (256,256).
+  -->
+  <g fill="#25c2a0">
+    <!-- top-left: corner (48,48) to centre -->
+    <path d="M48 48 A208 208 0 0 1 256 256 A208 208 0 0 1 48 48 Z"/>
+    <!-- top-right: corner (464,48) to centre -->
+    <path d="M464 48 A208 208 0 0 1 256 256 A208 208 0 0 1 464 48 Z"/>
+    <!-- bottom-right: corner (464,464) to centre -->
+    <path d="M464 464 A208 208 0 0 1 256 256 A208 208 0 0 1 464 464 Z"/>
+    <!-- bottom-left: corner (48,464) to centre -->
+    <path d="M48 464 A208 208 0 0 1 256 256 A208 208 0 0 1 48 464 Z"/>
+  </g>
+</svg>
