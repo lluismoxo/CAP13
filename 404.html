@@ -56,7 +56,20 @@
     }
     a.button:hover { background: rgba(255, 255, 255, .8); }
   </style>
-<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="apple-touch-icon" href="/apple-touch-icon.png"></head>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><style data-cap-mobile-fix="1">
+/* --- Mobile: no horizontal scroll, no zoom-out ---------------------------
+   overflow-x must be on BOTH html and body. With it only on body, the
+   browser propagates the overflow to the viewport and widens the layout
+   viewport instead of clipping (that is what let the page drag sideways
+   and render zoomed out).
+   `clip` rather than `hidden`: `hidden` makes a scroll container, which
+   would break the sticky header. `clip` just cuts, with a fallback for
+   older engines. */
+html{overflow-x:hidden;overflow-x:clip}
+body{overflow-x:hidden!important;overflow-x:clip!important;max-width:100%}
+.logos,.logos-animated{max-width:100%;overflow-x:clip}
+img,svg,video,canvas,iframe{max-width:100%}
+</style></head>
 <body>
   <div class="wrap">
     <p class="code">Error 404</p>
