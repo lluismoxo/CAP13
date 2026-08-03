@@ -42,7 +42,7 @@
     button.disabled = busy;
     button.style.opacity = busy ? ".45" : "1";
     button.style.cursor = busy ? "not-allowed" : "pointer";
-    button.textContent = busy ? "Sending…" : defaultLabel;
+    button.textContent = busy ? "Enviando…" : defaultLabel;
   }
 
   // --- Delivery ------------------------------------------------------------
@@ -58,7 +58,7 @@
     });
     if (!response.ok || !result.ok) {
       var firstError = result.errors && Object.values(result.errors)[0];
-      throw new Error(firstError || result.error || "Something went wrong. Please try again.");
+      throw new Error(firstError || result.error || "Algo ha salido mal. Inténtalo de nuevo.");
     }
   }
 
@@ -81,7 +81,7 @@
       }),
     });
     if (!response.ok) {
-      throw new Error("We could not save your request. Please try again in a moment.");
+      throw new Error("No hemos podido guardar tu solicitud. Inténtalo de nuevo en un momento.");
     }
   }
 
@@ -94,7 +94,7 @@
     // Honeypot: only bots fill the hidden field.
     if ((data.website_url || "").trim()) {
       form.reset();
-      show("Thanks — we received your request and will get back to you shortly.", "success");
+      show("Gracias — hemos recibido tu solicitud y te responderemos en breve.", "success");
       return;
     }
 
@@ -106,12 +106,12 @@
       consent: form.consent.checked,
     };
 
-    if (!payload.name) return show("Please enter your name.", "error");
-    if (!payload.email) return show("Please enter your email.", "error");
+    if (!payload.name) return show("Introduce tu nombre.", "error");
+    if (!payload.email) return show("Introduce tu email.", "error");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(payload.email)) {
-      return show("That email address does not look valid.", "error");
+      return show("Ese email no parece válido.", "error");
     }
-    if (!payload.consent) return show("You must accept the Privacy Policy.", "error");
+    if (!payload.consent) return show("Debes aceptar la Política de Privacidad.", "error");
 
     setBusy(true);
 
@@ -120,11 +120,11 @@
       else await sendToSupabase(payload);
 
       form.reset();
-      show("Thanks — we received your request and will get back to you shortly.", "success");
+      show("Gracias — hemos recibido tu solicitud y te responderemos en breve.", "success");
       setBusy(true);
-      button.textContent = "Request sent";
+      button.textContent = "Solicitud enviada";
     } catch (err) {
-      show(err.message || "Could not reach the server. Please try again in a moment.", "error");
+      show(err.message || "No se ha podido contactar con el servidor. Inténtalo de nuevo en un momento.", "error");
       setBusy(false);
     }
   });

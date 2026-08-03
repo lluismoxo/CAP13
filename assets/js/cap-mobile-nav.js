@@ -33,7 +33,7 @@
     host.style.cssText = 'position:absolute;top:12px;right:28px;z-index:50;display:none;align-items:center';
     var b = document.createElement('button');
     b.type = 'button';
-    b.setAttribute('aria-label', 'Open menu');
+    b.setAttribute('aria-label', 'Abrir menú');
     b.style.cssText = 'height:32px;width:32px;position:relative;display:flex;background:none;border:0;padding:0;cursor:pointer;color:#fff';
     var bars = '';
     ['top:8px;left:4px;width:24px', 'top:16px;left:4px;width:24px', 'top:24px;left:4px;width:24px'].forEach(function (p) {
@@ -52,7 +52,7 @@
   }
 
   ready(function () {
-    var btn = document.querySelector('button[aria-label="Open menu"]') || createButton();
+    var btn = document.querySelector('button[aria-label="Open menu"], button[aria-label="Abrir men\u00fa"]') || createButton();
     if (!btn) return;
 
     // The three bars that morph into a cross. The last two are the cross arms,
@@ -62,12 +62,12 @@
 
     // --- Links: taken from the header's primary nav ------------------------
     var LINKS = [
-      ['Services', './services.html'],
-      ['Industries', './industries.html'],
-      ['Method', './method.html'],
-      ['Cases', './cases.html'],
-      ['About Us', './about.html'],
-      ['Contact', './contact.html']
+      ['Servicios', './services.html'],
+      ['Sectores', './industries.html'],
+      ['Método', './method.html'],
+      ['Casos', './cases.html'],
+      ['Nosotros', './about.html'],
+      ['Contacto', './contact.html']
     ];
 
     var style = document.createElement('style');
@@ -90,13 +90,13 @@
       '#cap-mnav .cap-mnav-foot a:hover{color:#fff}',
       'body.cap-mnav-open{overflow:hidden}',
       // Keep the button above the panel so it can close it.
-      'button[aria-label="Open menu"]{z-index:50}'
+      'button[aria-label="Open menu"],button[aria-label="Abrir men\u00fa"]{z-index:50}'
     ].join('');
     document.head.appendChild(style);
 
     var panel = document.createElement('nav');
     panel.id = 'cap-mnav';
-    panel.setAttribute('aria-label', 'Mobile navigation');
+    panel.setAttribute('aria-label', 'Navegación móvil');
     panel.setAttribute('aria-hidden', 'true');
 
     var html = LINKS.map(function (l) {
@@ -125,7 +125,7 @@
       panel.setAttribute('aria-hidden', open ? 'false' : 'true');
       document.body.classList.toggle('cap-mnav-open', open);
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      btn.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
       setBars(open);
     }
 

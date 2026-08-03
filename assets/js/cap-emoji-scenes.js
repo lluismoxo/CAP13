@@ -74,21 +74,21 @@
     var wrap = d('width:100%;max-width:940px;display:grid;grid-template-columns:1fr 1fr;gap:56px');
     var cols = [
       {
-        t: 'Traditional consulting',
+        t: 'Consultoría tradicional',
         rows: [
-          ['Partner oversight', .82, 0, 'Senior names on the invoice, rarely on the work.'],
-          ['Account management', .68, 0, 'A layer that forwards your questions.'],
-          ['Discovery deck', .74, 0, 'Slides that describe the problem you already knew.'],
-          ['Fixed retainer', .6, 0, 'Billed whether or not anything shipped.'],
-          ['Actual delivery', .3, 1, 'What you were trying to buy in the first place.']
+          ['Supervisión del socio', .82, 0, 'Nombres senior en la factura, rara vez en el trabajo.'],
+          ['Gestión de cuenta', .68, 0, 'Una capa que reenvía tus preguntas.'],
+          ['Presentación de diagnóstico', .74, 0, 'Diapositivas que describen el problema que ya conocías.'],
+          ['Iguala fija', .6, 0, 'Se factura tanto si se entrega algo como si no.'],
+          ['Trabajo entregado', .3, 1, 'Lo que querías comprar desde el principio.']
         ]
       },
       {
-        t: 'With CAP',
+        t: 'Con CAP',
         rows: [
-          ['Scoping session', .34, 1, 'One conversation with the person who will build it.'],
-          ['Actual delivery', .92, 1, 'Nearly everything you pay for is the work itself.'],
-          ['Transparent quote', .46, 1, 'Priced before we start, no moving targets.']
+          ['Sesión de alcance', .34, 1, 'Una conversación con quien lo va a construir.'],
+          ['Trabajo entregado', .92, 1, 'Casi todo lo que pagas es el trabajo en sí.'],
+          ['Presupuesto transparente', .46, 1, 'Precio cerrado antes de empezar, sin sorpresas.']
         ]
       }
     ];
@@ -126,8 +126,8 @@
     var ink = '15,21,18';
     root.style.cssText += ';position:relative;pointer-events:auto;min-height:290px;display:flex;flex-direction:column;justify-content:center;gap:40px;padding:0 2%';
     var lanes = [
-      { t: 'The usual way', dur: 22, steps: ['Brief', 'Workshop', 'Deck', 'Approval', 'Kick-off'], end: 'Still preparing' },
-      { t: 'The way we work', dur: 6, steps: ['Scoping', 'First version', 'In your hands'], end: 'Running' }
+      { t: 'La forma habitual', dur: 22, steps: ['Brief', 'Workshop', 'Presentación', 'Aprobación', 'Kick-off'], end: 'Aún preparando' },
+      { t: 'Como trabajamos nosotros', dur: 6, steps: ['Scoping', 'Primera versión', 'En tus manos'], end: 'Funcionando' }
     ];
     var built = lanes.map(function (o, i) {
       var row = d('display:grid;grid-template-columns:180px 1fr;gap:28px;align-items:center');
@@ -177,11 +177,11 @@
   scenes.adapt = function (root) {
     root.style.cssText += ';position:relative;pointer-events:auto;min-height:360px;display:flex;flex-direction:column;gap:30px;justify-content:center';
     var biz = [
-      { l: 'Retail', mods: ['Orders in one inbox', 'Stock alerts', 'Assistant on WhatsApp', 'Invoices filed on their own', 'Review requests', 'Sales summary each morning'] },
-      { l: 'Restaurant', mods: ['Bookings without phone calls', 'Answers out of hours', 'Shift planning', 'Supplier orders', 'Reviews asked at the right moment', 'Covers at a glance'] },
-      { l: 'Gym', mods: ['Trials followed up', 'Members at risk flagged', 'Class questions answered', 'Timetable changes pushed', 'Failed payments chased', 'Retention in one view'] },
-      { l: 'Clinic', mods: ['Appointments without friction', 'Reminders before each visit', 'Records in one place', 'First questions triaged', 'Insurance paperwork', 'Occupancy per room'] },
-      { l: 'Logistics', mods: ['Routes planned', 'Deliveries tracked', 'Clients updated', 'Proof of delivery filed', 'Incidents escalated', 'Fleet in one board'] }
+      { l: 'Retail', mods: ['Pedidos en una sola bandeja', 'Avisos de stock', 'Asistente en WhatsApp', 'Facturas archivadas solas', 'Peticiones de reseña', 'Resumen de ventas cada mañana'] },
+      { l: 'Restaurante', mods: ['Reservas sin llamadas', 'Respuestas fuera de horario', 'Planificación de turnos', 'Pedidos a proveedores', 'Reseñas pedidas en el momento justo', 'Comensales de un vistazo'] },
+      { l: 'Gimnasio', mods: ['Pruebas con seguimiento', 'Socios en riesgo detectados', 'Dudas de clases resueltas', 'Cambios de horario avisados', 'Pagos fallidos reclamados', 'Retención en una sola vista'] },
+      { l: 'Clínica', mods: ['Citas sin fricción', 'Recordatorios antes de cada visita', 'Historiales en un solo sitio', 'Primeras dudas filtradas', 'Papeleo de seguros', 'Ocupación por sala'] },
+      { l: 'Logística', mods: ['Rutas planificadas', 'Entregas con seguimiento', 'Clientes informados', 'Albaranes archivados', 'Incidencias escaladas', 'Flota en un solo panel'] }
     ];
     var tabs = d('display:flex;flex-wrap:wrap;gap:0;border-bottom:1px solid rgba(255,255,255,.12)');
     var grid = d('display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1)');
@@ -216,10 +216,10 @@
   scenes.team = function (root) {
     root.style.cssText += ';position:relative;pointer-events:auto;min-height:380px;display:flex;align-items:center';
     var people = [
-      { r: 'Software Systems', d: 'Software systems adapted and designed for your needs: workflows, assistants and integrations built on your own data and maintained once they are live.' },
-      { r: 'Marketing', d: 'Positioning, content and outbound handled end to end, so the pipeline does not depend on who has time this week.' },
-      { r: 'Operations', d: 'Processes mapped as they really happen, paperwork removed, and the day-to-day made predictable again.' },
-      { r: 'Finance & data', d: 'Reporting that assembles itself, so decisions are made on numbers nobody had to chase.' }
+      { r: 'Sistemas de software', d: 'Sistemas de software adaptados y diseñados para lo que necesitas: workflows, asistentes e integraciones construidos sobre tus propios datos y mantenidos una vez en marcha.' },
+      { r: 'Marketing', d: 'Posicionamiento, contenido y outbound gestionados de principio a fin, para que el pipeline no dependa de quién tenga tiempo esta semana.' },
+      { r: 'Operaciones', d: 'Procesos mapeados tal y como ocurren de verdad, papeleo eliminado y el día a día vuelto a hacer predecible.' },
+      { r: 'Finanzas y datos', d: 'Reporting que se monta solo, para decidir con números que nadie ha tenido que perseguir.' }
     ];
     var wrap = d('display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:60px;width:100%;align-items:center');
     var list = d('display:flex;flex-direction:column');
