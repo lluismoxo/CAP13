@@ -3,7 +3,37 @@
   var CSS = [
     '@keyframes cap-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}',
     '@keyframes cap-scan{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}',
-    '.cap-scene *{box-sizing:border-box}'
+    '.cap-scene *{box-sizing:border-box}',
+    /* --- Mobile: the scenes are authored for desktop widths (two-column
+       grids, 280-460px panes). Below 900px collapse every grid to a single
+       column and let the panes shrink, so nothing is cut off on the right. */
+    '@media (max-width:900px){',
+    /* Scenes are authored for desktop. Collapse every grid to one column and
+       let the scene size itself to its content instead of a fixed height. */
+    '  .cap-scene{min-height:0!important;height:auto!important;padding:0!important;',
+    '    display:block!important;overflow:hidden}',
+    '  .cap-scene>div{grid-template-columns:1fr!important;gap:24px!important;max-width:100%!important;',
+    '    width:100%!important}',
+    '  .cap-scene>div>div{max-width:100%!important;min-width:0!important}',
+    /* speed: the "180px 1fr" label/track rows stack, and the track needs room
+       for the end label, which is absolutely positioned at its right edge. */
+    '  [data-scene="speed"]>div{display:block!important;margin-bottom:26px}',
+    '  [data-scene="speed"]>div>div:first-child{margin-bottom:10px}',
+    '  [data-scene="speed"] [data-cap-track]{height:112px!important}',
+    /* Park the end label under the track instead of at its right edge, where
+       it collided with the last step and ran off screen. */
+    '  [data-scene="speed"] [data-cap-endlab]{top:auto!important;bottom:0!important;',
+    '    right:auto!important;left:0!important;text-align:left}',
+    '}',
+    '@media (max-width:640px){',
+    '  .cap-scene>div{gap:18px!important}',
+    /* the descriptive pane sits to the right on desktop: move its rule below */
+    '  .cap-scene [data-cap-pane]{border-left:0!important;border-top:1px solid rgba(255,255,255,.14)!important;',
+    '    padding-left:0!important;padding-top:18px!important;font-size:15px!important;min-height:0!important;max-width:100%!important}',
+    '  .cap-scene [data-cap-label]{font-size:19px!important}',
+    /* step labels are uppercase monospace and collide when the track is narrow */
+    '  [data-scene="speed"] [data-cap-step]{font-size:8.5px!important;letter-spacing:.04em!important}',
+    '}'
   ].join('');
   if (!document.getElementById('cap-scene-css')) {
     var st = document.createElement('style');
@@ -78,6 +108,7 @@
       var row = d('display:grid;grid-template-columns:180px 1fr;gap:28px;align-items:center');
       row.appendChild(d('font-size:15px;color:rgba(' + ink + ',' + (i ? '.95' : '.5') + ')', o.t));
       var track = d('position:relative;height:74px;cursor:pointer');
+      track.setAttribute('data-cap-track', '1');
       var line = d('position:absolute;left:0;right:0;top:36px;height:1px;background:rgba(' + ink + ',.16)');
       var prog = d('position:absolute;left:0;top:36px;height:1px;width:0;background:rgba(' + ink + ',' + (i ? '.9' : '.35') + ')');
       var head = d('position:absolute;top:31px;left:0;width:11px;height:11px;margin-left:-5px;border-radius:2px;background:rgba(' + ink + ',' + (i ? '.95' : '.4') + ');transform:rotate(45deg)');
@@ -86,11 +117,14 @@
         var x = (k + 1) / (o.steps.length + 1);
         var g = d('position:absolute;top:0;left:' + (x * 100) + '%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;transition:opacity .3s');
         g.style.opacity = .3;
-        g.appendChild(d('font-family:' + mono + ';font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(' + ink + ',.7);white-space:nowrap', s));
+        var stepLab = d('font-family:' + mono + ';font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(' + ink + ',.7);white-space:nowrap', s);
+        stepLab.setAttribute('data-cap-step', '1');
+        g.appendChild(stepLab);
         g.appendChild(d('width:1px;height:14px;background:rgba(' + ink + ',.3)'));
         track.appendChild(g); g.dataset.at = x; return g;
       });
       var endLab = d('position:absolute;top:48px;right:0;font-family:' + mono + ';font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:rgba(' + ink + ',.35);transition:color .3s', o.end);
+      endLab.setAttribute('data-cap-endlab', '1');
       track.appendChild(endLab);
       track.addEventListener('mouseenter', function () { o.hold = true; });
       track.addEventListener('mouseleave', function () { o.hold = false; });
@@ -161,15 +195,17 @@
       { r: 'Operations', d: 'Processes mapped as they really happen, paperwork removed, and the day-to-day made predictable again.' },
       { r: 'Finance & data', d: 'Reporting that assembles itself, so decisions are made on numbers nobody had to chase.' }
     ];
-    var wrap = d('display:grid;grid-template-columns:minmax(280px,1fr) minmax(280px,1.1fr);gap:60px;width:100%;align-items:center');
+    var wrap = d('display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:60px;width:100%;align-items:center');
     var list = d('display:flex;flex-direction:column');
     var pane = d('font-size:18px;line-height:1.6;color:rgba(255,255,255,.65);max-width:460px;border-left:1px solid rgba(255,255,255,.14);padding-left:28px;min-height:120px;display:flex;align-items:center');
+    pane.setAttribute('data-cap-pane', '1');
     wrap.appendChild(list); wrap.appendChild(pane); root.appendChild(wrap);
 
     var cur = -1, hold = false, t0 = 0, DUR = 5200;
     var rows = people.map(function (p, i) {
       var row = d('position:relative;padding:20px 0;border-top:' + (i ? '1px solid rgba(255,255,255,.1)' : 'none') + ';cursor:pointer');
       var lab = d('font-size:26px;letter-spacing:-.02em;color:rgba(255,255,255,.35);transition:color .3s,transform .3s', p.r);
+      lab.setAttribute('data-cap-label', '1');
       var bar = d('position:absolute;left:0;bottom:0;height:1px;width:0;background:#fff');
       row.appendChild(lab); row.appendChild(bar);
       row.addEventListener('click', function () { set(i); });
