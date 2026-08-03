@@ -26,7 +26,16 @@
     '    right:auto!important;left:0!important;text-align:left}',
     '}',
     '@media (max-width:640px){',
-    '  .cap-scene>div{gap:18px!important}',
+    '  .cap-scene>div{gap:14px!important}',
+    /* Compact everything: the scenes are diagrams, not full sections. */
+    '  .cap-scene{font-size:12px}',
+    /* adapt: six cards at 96px min-height each made the scene ~770px tall. */
+    '  [data-scene="adapt"] [data-cap-card]{min-height:0!important;padding:12px 14px!important;gap:6px!important}',
+    '  [data-scene="adapt"]{gap:16px!important}',
+    /* value: tighten the bar rows */
+    '  [data-scene="value"] [data-cap-col]{gap:14px!important}',
+    /* team: smaller labels and pane */
+    '  [data-scene="team"] [data-cap-row]{padding:12px 0!important}',
     /* the descriptive pane sits to the right on desktop: move its rule below */
     '  .cap-scene [data-cap-pane]{border-left:0!important;border-top:1px solid rgba(255,255,255,.14)!important;',
     '    padding-left:0!important;padding-top:18px!important;font-size:15px!important;min-height:0!important;max-width:100%!important}',
@@ -71,6 +80,7 @@
     var caption = { textContent: '' };
     cols.forEach(function (c) {
       var col = d('display:flex;flex-direction:column;gap:22px');
+      col.setAttribute('data-cap-col', '1');
       col.appendChild(d('font-family:' + mono + ';font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.14)', c.t));
       c.rows.forEach(function (r, i) {
         var row = d('display:flex;flex-direction:column;gap:9px;cursor:default');
@@ -177,6 +187,7 @@
         var c = d('background:#000;padding:22px 20px;min-height:96px;display:flex;flex-direction:column;justify-content:space-between;gap:14px;animation:cap-in .4s ' + (k * .05) + 's both;transition:background .2s',
           '<span style="font-family:' + mono + ';font-size:10px;letter-spacing:.12em;color:rgba(255,255,255,.3)">' + String(k + 1).padStart(2, '0') + '</span>' +
           '<span style="font-size:15px;line-height:1.35;color:rgba(255,255,255,.8)">' + m + '</span>');
+        c.setAttribute('data-cap-card', '1');
         c.addEventListener('mouseenter', function () { c.style.background = 'rgba(255,255,255,.05)'; });
         c.addEventListener('mouseleave', function () { c.style.background = '#000'; });
         grid.appendChild(c);
@@ -204,6 +215,7 @@
     var cur = -1, hold = false, t0 = 0, DUR = 5200;
     var rows = people.map(function (p, i) {
       var row = d('position:relative;padding:20px 0;border-top:' + (i ? '1px solid rgba(255,255,255,.1)' : 'none') + ';cursor:pointer');
+      row.setAttribute('data-cap-row', '1');
       var lab = d('font-size:26px;letter-spacing:-.02em;color:rgba(255,255,255,.35);transition:color .3s,transform .3s', p.r);
       lab.setAttribute('data-cap-label', '1');
       var bar = d('position:absolute;left:0;bottom:0;height:1px;width:0;background:#fff');

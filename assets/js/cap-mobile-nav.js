@@ -103,7 +103,6 @@
       return '<a href="' + l[1] + '">' + l[0] + '</a>';
     }).join('');
     html += '<div class="cap-mnav-foot">' +
-      '<a href="https://www.instagram.com/cap_consultor/" target="_blank" rel="noopener">Instagram</a>' +
       '<a href="https://www.linkedin.com/company/cap-consultor%C3%ADa-adaptable-para-pymes/" target="_blank" rel="noopener">LinkedIn</a>' +
       '</div>';
     panel.innerHTML = html;
