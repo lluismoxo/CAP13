@@ -19,7 +19,8 @@
        for the end label, which is absolutely positioned at its right edge. */
     '  [data-scene="speed"]>div{display:block!important;margin-bottom:26px}',
     '  [data-scene="speed"]>div>div:first-child{margin-bottom:10px}',
-    '  [data-scene="speed"] [data-cap-track]{height:112px!important}',
+    '  [data-scene="speed"] [data-cap-track]{height:96px!important}',
+    '  [data-scene="speed"]{gap:18px!important;min-height:0!important}',
     /* Park the end label under the track instead of at its right edge, where
        it collided with the last step and ran off screen. */
     '  [data-scene="speed"] [data-cap-endlab]{top:auto!important;bottom:0!important;',
@@ -41,7 +42,10 @@
     '    padding-left:0!important;padding-top:18px!important;font-size:15px!important;min-height:0!important;max-width:100%!important}',
     '  .cap-scene [data-cap-label]{font-size:19px!important}',
     /* step labels are uppercase monospace and collide when the track is narrow */
-    '  [data-scene="speed"] [data-cap-step]{font-size:8.5px!important;letter-spacing:.04em!important}',
+    '  [data-scene="speed"] [data-cap-step]{font-size:8px!important;letter-spacing:.02em!important}',
+    '  [data-scene="speed"] [data-cap-track]{height:84px!important}',
+    '  [data-scene="speed"] [data-cap-endlab]{font-size:9px!important}',
+    '  [data-scene="speed"]>div>div:first-child{font-size:13px!important}',
     '}'
   ].join('');
   if (!document.getElementById('cap-scene-css')) {
