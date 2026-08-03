@@ -12,8 +12,8 @@
        let the scene size itself to its content instead of a fixed height. */
     '  .cap-scene{min-height:0!important;height:auto!important;padding:0!important;',
     '    display:block!important;overflow:hidden}',
-    '  .cap-scene>div{grid-template-columns:1fr!important;gap:24px!important;max-width:100%!important;',
-    '    width:100%!important}',
+    '  .cap-scene>div{grid-template-columns:1fr!important;gap:24px!important;max-width:none!important;',
+    '    width:100%}',
     '  .cap-scene>div>div{max-width:100%!important;min-width:0!important}',
     /* speed: the "180px 1fr" label/track rows stack, and the track needs room
        for the end label, which is absolutely positioned at its right edge. */
@@ -27,9 +27,20 @@
     '    right:auto!important;left:0!important;text-align:left}',
     '}',
     '@media (max-width:640px){',
-    '  .cap-scene>div{gap:14px!important}',
-    /* Compact everything: the scenes are diagrams, not full sections. */
-    '  .cap-scene{font-size:12px}',
+    '  .cap-scene>div{gap:12px!important}',
+    /* Compact everything: the scenes are diagrams, not full sections.
+       Scaling the whole scene keeps each diagram in proportion instead of
+       shrinking pieces one by one. transform-origin top so the scene stays
+       anchored where it starts, and the negative margin reclaims the empty
+       space the transform leaves behind (transforms do not affect layout). */
+    /* Scale the scene's inner content rather than the scene box: the box keeps
+       its normal width (so nothing is left hanging), while the diagram inside
+       renders smaller. The negative margin reclaims the space the transform
+       leaves behind, since transforms do not affect layout. */
+    '  .cap-scene{font-size:11px}',
+    '  .cap-scene>*{transform:scale(.84)!important;transform-origin:top left!important;',
+    '    width:119.05%!important;max-width:none!important}',
+    '  [data-scene="value"],[data-scene="adapt"],[data-scene="team"],[data-scene="speed"]{overflow:hidden}',
     /* adapt: six cards at 96px min-height each made the scene ~770px tall. */
     '  [data-scene="adapt"] [data-cap-card]{min-height:0!important;padding:12px 14px!important;gap:6px!important}',
     '  [data-scene="adapt"]{gap:16px!important}',
