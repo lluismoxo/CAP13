@@ -138,22 +138,43 @@ html:not(.dark) .cap-lang-menu li:focus-visible {
 }
 
 /* Below the header's `lg` breakpoint the desktop nav is replaced by a burger,
-   so the inline picker hides and the copy inside the mobile panel takes over. */
+   so the inline picker hides and the copy in the burger bar takes over. */
 @media (max-width: 1023px) {
-  .cap-lang:not(.cap-lang--mobile):not(.cap-lang--floating) {
+  .cap-lang:not(.cap-lang--floating):not(.cap-lang--burgerbar) {
     display: none;
   }
 }
 
-.cap-lang--mobile {
-  display: flex;
-  margin-top: 18px;
+/* Copia visible en la barra del burger: es la que hace que en el móvil se vea
+   que la web tiene idiomas sin abrir el menú. Se oculta en escritorio, donde
+   manda la de la cabecera. */
+.cap-lang--burgerbar {
+  display: none;
 }
+
+@media (max-width: 1023px) {
+  .cap-lang--burgerbar {
+    display: inline-flex;
+  }
+  /* El botón del burger mide 32px; igualamos la altura para que no descuadre
+     la línea, y compactamos algo el pill para dejar aire en pantallas de 320px. */
+  .cap-lang--burgerbar .cap-lang-btn {
+    height: 32px;
+    padding: 0 8px 0 9px;
+    gap: 5px;
+  }
+  /* El menú cuelga hacia la izquierda: el pill está pegado al borde derecho. */
+  .cap-lang--burgerbar .cap-lang-menu {
+    right: 0;
+    left: auto;
+  }
+}
+
 
 /* 404.html ships without a header, so the picker floats in the top-right
    corner instead of sitting in one. It stays visible at every width: that page
-   has no burger menu to hold a second copy, so hiding it would leave no way to
-   change language there. */
+   has no burger bar to host the mobile copy, so hiding it would leave no way
+   to change language there. */
 .cap-lang--floating {
   position: fixed;
   top: 20px;
@@ -161,7 +182,3 @@ html:not(.dark) .cap-lang-menu li:focus-visible {
   z-index: 80;
 }
 
-.cap-lang--mobile .cap-lang-menu {
-  right: auto;
-  left: 0;
-}

@@ -295,11 +295,11 @@
   }
 
   /**
-   * Desktop: next to the Contacto button in the header.
-   * Mobile: below 1024px the header collapses to a burger and the inline
-   * picker is hidden by CSS, so a second copy goes inside the slide-out panel
-   * (#cap-mnav, built by cap-mobile-nav.js). Without it there would be no way
-   * to change language on a phone at all.
+   * Escritorio: junto al botón de Contacto, en la cabecera.
+   * Móvil (<1024px): la cabecera se pliega en un burger y esa copia se oculta
+   * por CSS, así que va otra en la barra del burger, siempre visible. Antes
+   * vivía dentro del menú desplegable y había que abrirlo para descubrir que
+   * la web tiene idiomas.
    */
   function mount() {
     var el = build();
@@ -318,35 +318,40 @@
         document.body.appendChild(el);
       }
     }
-    mountMobile();
+    mountBurgerBar();
   }
 
   /**
-   * cap-mobile-nav.js also runs deferred and builds its panel on DOMContentLoaded,
-   * so it may not exist yet when we mount. Poll briefly rather than depending on
-   * script order.
+   * En móvil el selector vivía solo dentro del menú desplegable, así que había
+   * que abrir el burger para descubrir que la web tiene idiomas: nadie lo hace.
+   * Esta copia va en la barra del burger, a su izquierda, siempre visible.
+   *
+   * El contenedor lo crea cap-mobile-nav.js (también diferido) y es un flex con
+   * `gap-5`, así que basta con insertar delante del botón para que queden
+   * alineados sin tocar el diseño.
    */
-  function mountMobile() {
+  function mountBurgerBar() {
     var tries = 0;
     (function attempt() {
-      var panel = document.getElementById("cap-mnav");
-      if (panel) {
-        if (panel.querySelector(".cap-lang")) return;
-        var clone = build();
-        clone.classList.add("cap-lang--mobile");
-        var foot = panel.querySelector(".cap-mnav-foot");
-        foot ? panel.insertBefore(clone, foot) : panel.appendChild(clone);
-        // The panel was built after our first pass, so its links ("Servicios",
-        // "Contacto", …) are not in `nodes` yet. Re-scan, and re-apply if the
-        // visitor is already on a non-Spanish language.
-        collect();
-        if (current !== DEFAULT) apply(current);
-        else render();
+      // El botón está en el HTML original en la home, y lo crea
+      // cap-mobile-nav.js en el resto de páginas (dentro de .cap-mnav-btn-host).
+      // Anclamos a su padre, sea cual sea, en vez de a un contenedor concreto.
+      var btn = document.querySelector(
+        'button[aria-label="Abrir menú"], button[aria-label="Cerrar menú"], button[aria-label="Open menu"]'
+      );
+      var host = btn && btn.parentNode;
+      if (host) {
+        if (host.querySelector(".cap-lang")) return;
+        var el = build();
+        el.classList.add("cap-lang--burgerbar");
+        host.insertBefore(el, btn);
+        render();
         return;
       }
       if (++tries < 40) setTimeout(attempt, 100);
     })();
   }
+
 
   // --- Boot -----------------------------------------------------------------
 
