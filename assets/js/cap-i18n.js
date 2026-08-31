@@ -306,8 +306,14 @@
       slot.insertBefore(el, cta);
     } else {
       var header = document.querySelector("header > div");
-      if (header) header.appendChild(el);
-      else return;
+      if (header) {
+        header.appendChild(el);
+      } else {
+        // 404.html has no header at all. Float the picker in the corner so the
+        // page is not the one place where language cannot be changed.
+        el.classList.add("cap-lang--floating");
+        document.body.appendChild(el);
+      }
     }
     mountMobile();
   }

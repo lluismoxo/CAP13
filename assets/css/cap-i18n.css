@@ -140,7 +140,7 @@ html:not(.dark) .cap-lang-menu li:focus-visible {
 /* Below the header's `lg` breakpoint the desktop nav is replaced by a burger,
    so the inline picker hides and the copy inside the mobile panel takes over. */
 @media (max-width: 1023px) {
-  .cap-lang:not(.cap-lang--mobile) {
+  .cap-lang:not(.cap-lang--mobile):not(.cap-lang--floating) {
     display: none;
   }
 }
@@ -148,6 +148,17 @@ html:not(.dark) .cap-lang-menu li:focus-visible {
 .cap-lang--mobile {
   display: flex;
   margin-top: 18px;
+}
+
+/* 404.html ships without a header, so the picker floats in the top-right
+   corner instead of sitting in one. It stays visible at every width: that page
+   has no burger menu to hold a second copy, so hiding it would leave no way to
+   change language there. */
+.cap-lang--floating {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 80;
 }
 
 .cap-lang--mobile .cap-lang-menu {
