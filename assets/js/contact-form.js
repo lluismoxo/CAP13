@@ -98,11 +98,19 @@
       return;
     }
 
+    // El `maxlength` del formulario se salta desde las herramientas del
+    // navegador, y la tabla no impone longitud: sin este recorte se pueden
+    // insertar campos de cientos de miles de caracteres. Los límites son los
+    // mismos del HTML, holgados para cualquier envío legítimo.
+    function limitar(valor, max) {
+      return (valor || "").trim().slice(0, max);
+    }
+
     var payload = {
-      name: (data.name || "").trim(),
-      company: (data.company || "").trim(),
-      email: (data.email || "").trim(),
-      message: (data.message || "").trim(),
+      name: limitar(data.name, 120),
+      company: limitar(data.company, 160),
+      email: limitar(data.email, 254),
+      message: limitar(data.message, 4000),
       consent: form.consent.checked,
     };
 

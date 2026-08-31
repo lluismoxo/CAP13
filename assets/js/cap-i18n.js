@@ -154,7 +154,10 @@
   function load(lang) {
     if (lang === DEFAULT) return Promise.resolve();
     if (cache[lang]) return Promise.resolve();
-    return fetch(BASE + lang + ".json", { cache: "no-cache" })
+    // Caché normal del navegador: el catálogo cambia con cada despliegue, y
+    // `no-cache` obligaba a revalidar contra el servidor en CADA página, una
+    // petición de red por navegación para quien no lee en español.
+    return fetch(BASE + lang + ".json")
       .then(function (r) {
         if (!r.ok) throw new Error("HTTP " + r.status);
         return r.json();
