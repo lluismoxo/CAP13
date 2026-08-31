@@ -36,6 +36,8 @@ const PROPER = new Set([
   "Adrián Jordán", "contact@capconsultor.eu", "capconsultor.eu", "www.aepd.es",
   "Agencia IA Solutions", "GitHub Pages (GitHub, Inc.)", "Ecommerce",
   "Reporting", "Chatbots", "Marketing", "Email:", "Industrial",
+  // Nombre comercial del cliente: se mantiene igual en todos los idiomas.
+  "Farmacia Major 13h Hospitalet",
 ]);
 
 function decode(s) {
