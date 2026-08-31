@@ -178,28 +178,39 @@
 
   // --- The picker -----------------------------------------------------------
 
-  var root, button, menu;
-
   function meta(code) {
     for (var i = 0; i < LANGS.length; i++) if (LANGS[i].code === code) return LANGS[i];
     return LANGS[0];
   }
 
+  /** Refresh every mounted picker (desktop header + mobile panel). */
   function render() {
-    if (!button) return;
     var m = meta(current);
-    button.querySelector(".cap-lang-flag").textContent = m.flag;
-    button.querySelector(".cap-lang-code").textContent = m.code.toUpperCase();
-    button.setAttribute("aria-label", "Idioma: " + m.label);
-    var opts = menu.querySelectorAll("[data-lang]");
-    for (var i = 0; i < opts.length; i++) {
-      var on = opts[i].getAttribute("data-lang") === current;
-      opts[i].setAttribute("aria-selected", on ? "true" : "false");
-      opts[i].classList.toggle("is-active", on);
+    var roots = document.querySelectorAll(".cap-lang");
+    for (var r = 0; r < roots.length; r++) {
+      var b = roots[r].querySelector(".cap-lang-btn");
+      if (!b) continue;
+      b.querySelector(".cap-lang-flag").textContent = m.flag;
+      b.querySelector(".cap-lang-code").textContent = m.code.toUpperCase();
+      b.setAttribute("aria-label", "Idioma: " + m.label);
+      var opts = roots[r].querySelectorAll("[data-lang]");
+      for (var i = 0; i < opts.length; i++) {
+        var on = opts[i].getAttribute("data-lang") === current;
+        opts[i].setAttribute("aria-selected", on ? "true" : "false");
+        opts[i].classList.toggle("is-active", on);
+      }
     }
   }
 
-  function open() {
+  // Only one picker is ever open at a time; these track whichever it is so the
+  // document-level listeners can close it.
+  var openRoot = null;
+  var openButton = null;
+
+  function open(root, button) {
+    if (openRoot && openRoot !== root) close();
+    openRoot = root;
+    openButton = button;
     root.classList.add("is-open");
     button.setAttribute("aria-expanded", "true");
     document.addEventListener("click", onDocClick, true);
@@ -207,28 +218,32 @@
   }
 
   function close() {
-    root.classList.remove("is-open");
-    button.setAttribute("aria-expanded", "false");
+    if (!openRoot) return;
+    openRoot.classList.remove("is-open");
+    openButton.setAttribute("aria-expanded", "false");
+    openRoot = null;
+    openButton = null;
     document.removeEventListener("click", onDocClick, true);
     document.removeEventListener("keydown", onKey, true);
   }
 
   function onDocClick(e) {
-    if (!root.contains(e.target)) close();
+    if (openRoot && !openRoot.contains(e.target)) close();
   }
 
   function onKey(e) {
     if (e.key === "Escape") {
+      var b = openButton;
       close();
-      button.focus();
+      if (b) b.focus();
     }
   }
 
   function build() {
-    root = document.createElement("div");
+    var root = document.createElement("div");
     root.className = "cap-lang";
 
-    button = document.createElement("button");
+    var button = document.createElement("button");
     button.type = "button";
     button.className = "cap-lang-btn";
     button.setAttribute("aria-haspopup", "listbox");
@@ -239,7 +254,7 @@
       '<svg class="cap-lang-caret" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">' +
       '<path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
-    menu = document.createElement("ul");
+    var menu = document.createElement("ul");
     menu.className = "cap-lang-menu";
     menu.setAttribute("role", "listbox");
 
@@ -268,7 +283,7 @@
 
     button.addEventListener("click", function (e) {
       e.stopPropagation();
-      root.classList.contains("is-open") ? close() : open();
+      root.classList.contains("is-open") ? close() : open(root, button);
     });
 
     root.appendChild(button);
@@ -278,8 +293,10 @@
 
   /**
    * Desktop: next to the Contacto button in the header.
-   * Mobile: the header collapses to a burger, so the picker goes into the
-   * slide-out panel instead, where there is room for it.
+   * Mobile: below 1024px the header collapses to a burger and the inline
+   * picker is hidden by CSS, so a second copy goes inside the slide-out panel
+   * (#cap-mnav, built by cap-mobile-nav.js). Without it there would be no way
+   * to change language on a phone at all.
    */
   function mount() {
     var el = build();
@@ -292,13 +309,34 @@
       if (header) header.appendChild(el);
       else return;
     }
+    mountMobile();
+  }
 
-    var burgerNav = document.querySelector("[data-cap-mobile-nav] nav, .cap-mobile-nav nav");
-    if (burgerNav) {
-      var clone = build();
-      clone.classList.add("cap-lang--mobile");
-      burgerNav.appendChild(clone);
-    }
+  /**
+   * cap-mobile-nav.js also runs deferred and builds its panel on DOMContentLoaded,
+   * so it may not exist yet when we mount. Poll briefly rather than depending on
+   * script order.
+   */
+  function mountMobile() {
+    var tries = 0;
+    (function attempt() {
+      var panel = document.getElementById("cap-mnav");
+      if (panel) {
+        if (panel.querySelector(".cap-lang")) return;
+        var clone = build();
+        clone.classList.add("cap-lang--mobile");
+        var foot = panel.querySelector(".cap-mnav-foot");
+        foot ? panel.insertBefore(clone, foot) : panel.appendChild(clone);
+        // The panel was built after our first pass, so its links ("Servicios",
+        // "Contacto", …) are not in `nodes` yet. Re-scan, and re-apply if the
+        // visitor is already on a non-Spanish language.
+        collect();
+        if (current !== DEFAULT) apply(current);
+        else render();
+        return;
+      }
+      if (++tries < 40) setTimeout(attempt, 100);
+    })();
   }
 
   // --- Boot -----------------------------------------------------------------
