@@ -1,0 +1,156 @@
+/* CAP — language picker.
+   Sits in the header next to the Contacto button. Colours are taken from the
+   site's existing dark palette so it reads as part of the header, not as a
+   widget bolted on. */
+
+.cap-lang {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.cap-lang-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 10px 0 11px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 9999px;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+}
+
+.cap-lang-btn:hover {
+  border-color: rgba(255, 255, 255, 0.34);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.cap-lang-btn:focus-visible {
+  outline: 2px solid #00e599;
+  outline-offset: 2px;
+}
+
+/* The site renders light-on-dark by default (html.dark). Keep the picker
+   legible if the light theme is ever switched on. */
+html:not(.dark) .cap-lang-btn {
+  border-color: rgba(0, 0, 0, 0.16);
+  color: #0c0d0d;
+}
+
+html:not(.dark) .cap-lang-btn:hover {
+  border-color: rgba(0, 0, 0, 0.34);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.cap-lang-flag {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.cap-lang-code {
+  font-variant-numeric: tabular-nums;
+}
+
+.cap-lang-caret {
+  margin-left: 1px;
+  opacity: 0.6;
+  transition: transform 0.2s;
+}
+
+.cap-lang.is-open .cap-lang-caret {
+  transform: rotate(180deg);
+}
+
+.cap-lang-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 70;
+  min-width: 168px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  background: #0c0d0d;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.55);
+  /* Hidden by default; `visibility` keeps it out of the tab order while the
+     opacity transition runs. */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.18s, transform 0.18s, visibility 0.18s;
+}
+
+html:not(.dark) .cap-lang-menu {
+  border-color: rgba(0, 0, 0, 0.12);
+  background: #fff;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.16);
+}
+
+.cap-lang.is-open .cap-lang-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.cap-lang-menu li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+html:not(.dark) .cap-lang-menu li {
+  color: rgba(12, 13, 13, 0.66);
+}
+
+.cap-lang-menu li:hover,
+.cap-lang-menu li:focus-visible {
+  background: rgba(255, 255, 255, 0.07);
+  color: #fff;
+  outline: none;
+}
+
+html:not(.dark) .cap-lang-menu li:hover,
+html:not(.dark) .cap-lang-menu li:focus-visible {
+  background: rgba(0, 0, 0, 0.05);
+  color: #0c0d0d;
+}
+
+.cap-lang-menu li.is-active {
+  color: #00e599;
+}
+
+/* Below the header's `lg` breakpoint the desktop nav is replaced by a burger,
+   so the inline picker hides and the copy inside the mobile panel takes over. */
+@media (max-width: 1023px) {
+  .cap-lang:not(.cap-lang--mobile) {
+    display: none;
+  }
+}
+
+.cap-lang--mobile {
+  display: flex;
+  margin-top: 18px;
+}
+
+.cap-lang--mobile .cap-lang-menu {
+  right: auto;
+  left: 0;
+}
